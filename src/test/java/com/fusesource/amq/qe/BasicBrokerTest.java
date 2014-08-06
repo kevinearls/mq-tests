@@ -1,5 +1,7 @@
 package com.fusesource.amq.qe;
 
+import com.fusesource.amq.qe.util.AsyncConsumer;
+import com.fusesource.amq.qe.util.Producer;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;

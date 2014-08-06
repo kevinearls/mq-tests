@@ -1,4 +1,4 @@
-package com.fusesource.amq.qe;
+package com.fusesource.amq.qe.util;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
@@ -22,9 +22,6 @@ public class AsyncConsumer implements MessageListener {
     protected static final Logger LOG = LoggerFactory.getLogger(AsyncConsumer.class);
 
     protected static String targetQueueName;
-    protected static String brokerURL;
-    protected static String amqUser;
-    protected static String amqPassword;
 
     private static transient ConnectionFactory factory;
     private transient Connection connection;
@@ -35,14 +32,11 @@ public class AsyncConsumer implements MessageListener {
     public AtomicInteger deleteCount = new AtomicInteger(0);
     public CountDownLatch receivedCount;
 
-    public AsyncConsumer(String[] jobs, int receivedCount, String targetQueueName, String brokerUrl, String user, String password) throws JMSException {
+    public AsyncConsumer(String[] jobs, int receivedCount, String targetQueueName, String brokerURL, String amqUser, String amqPassword) throws JMSException {
         this.jobs = jobs;
-        this.brokerURL = brokerUrl;
-        this.amqUser = user;
-        this.amqPassword = password;
         this.targetQueueName = targetQueueName;
 
-        LOG.info("Trying to connect to broker: " + brokerUrl);
+        LOG.info("Trying to connect to broker: " + brokerURL);
         factory = new ActiveMQConnectionFactory(brokerURL);
         connection = factory.createConnection(amqUser, amqPassword);
         connection.start();

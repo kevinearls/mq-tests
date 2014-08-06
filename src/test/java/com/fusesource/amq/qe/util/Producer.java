@@ -1,4 +1,4 @@
-package com.fusesource.amq.qe;
+package com.fusesource.amq.qe.util;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
@@ -37,8 +37,8 @@ public class Producer {
 
     private String jobs[];
 
-    protected AtomicInteger suspendCount = new AtomicInteger(0);
-    protected AtomicInteger deleteCount = new AtomicInteger(0);
+    public AtomicInteger suspendCount = new AtomicInteger(0);
+    public AtomicInteger deleteCount = new AtomicInteger(0);
 
     public Producer(Integer numberOfMessages, String[] jobs, String targetQueueName, String brokerUrl, String user, String password) throws JMSException {
         this.brokerURL = brokerUrl;
