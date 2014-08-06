@@ -48,7 +48,7 @@ public class AsyncTopicConsumer implements MessageListener {
         }
     }
 
-    public void onMessage(Message messageArgument)  {
+    public void onMessage(Message messageArgument) {
         try {
             TextMessage message = (TextMessage) messageArgument;
             Destination destination = message.getJMSDestination();

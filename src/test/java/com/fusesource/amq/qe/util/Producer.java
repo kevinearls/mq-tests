@@ -83,7 +83,7 @@ public class Producer {
      * @throws JMSException
      */
     public void sendAllMessages() throws JMSException {
-        for (int i=0; i < totalMessages; i++) {
+        for (int i = 0; i < totalMessages; i++) {
             sendMessage();
             if (i % MESSAGES_PER_INTERVAL == 0) {
                 try {

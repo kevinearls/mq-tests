@@ -30,7 +30,7 @@ public class TopicProducer {
     private transient Session session;
     private static int total;
     private AtomicInteger id = new AtomicInteger(0);
-    private static String testTopicName="aaatest";
+    private static String testTopicName = "aaatest";
 
     public AtomicInteger sentCount = new AtomicInteger(0);
 
@@ -38,7 +38,7 @@ public class TopicProducer {
         this.brokerURL = brokerUrl;
         this.amqUser = user;
         this.amqPassword = password;
-        this.testTopicName=testTopicName;
+        this.testTopicName = testTopicName;
         this.MAX_TOTAL_MESSAGES = numberOfMessages;
 
         factory = new ActiveMQConnectionFactory(brokerURL);
@@ -64,14 +64,13 @@ public class TopicProducer {
     }
 
     /**
-     *
      * @throws JMSException
      */
     public void sendAllMessages() throws JMSException {
-        for (int i=0; i < MAX_TOTAL_MESSAGES; i++) {
+        for (int i = 0; i < MAX_TOTAL_MESSAGES; i++) {
             sendMessage();
             if (i % MESSAGES_PER_INTERVAL == 0) {
-                System.out.println("Sent '" + MESSAGES_PER_INTERVAL + "' of '" + total + "' job messages");
+                System.out.println("Sent '" + MESSAGES_PER_INTERVAL + "' of '" + MAX_TOTAL_MESSAGES + "' job messages");
                 try {
                     Thread.sleep(SLEEP_INTERVAL);
                 } catch (InterruptedException x) {
