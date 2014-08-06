@@ -16,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Created by kearls on 06/08/14.
+ *
+ * Send 1000 total messages, 500 to each of 2 queues, with 1 consumer.
  */
 public class BasicBrokerTest {
     protected static final Logger LOG = LoggerFactory.getLogger(BasicBrokerTest.class);

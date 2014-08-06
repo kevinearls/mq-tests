@@ -18,6 +18,8 @@ import static org.junit.Assert.*;
 
 /**
  * Created by kearls on 06/08/14.
+ *
+ * Send 100 messages to 5 different topic consumers and ensure they each get all 500.
  */
 public class BasicTopicTest {
     protected static String brokerURL = "tcp://localhost:61616";
