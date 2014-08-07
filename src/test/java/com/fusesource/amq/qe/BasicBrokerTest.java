@@ -17,7 +17,9 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by kearls on 06/08/14.
  *
- * Send 1000 total messages, 500 to each of 2 queues, with 1 consumer.
+ * Simple producer/consumer example.  Create a producer and consumer, send 1000 (or totalMessages)
+ * messages, 500 each on two queues, and make sure the consumer receives all of them.
+ *
  */
 public class BasicBrokerTest {
     protected static final Logger LOG = LoggerFactory.getLogger(BasicBrokerTest.class);
@@ -25,7 +27,7 @@ public class BasicBrokerTest {
     protected static final String TARGET_QUEUE_NAME = "queue://JOBS.suspend";
     protected static String brokerURL = "tcp://localhost:61616";
     protected static String amqUser ="admin";
-    protected static String amqPassword ="biteme";
+    protected static String amqPassword ="admin";
 
     private static Integer totalMessages = 1000;
     public static String jobs[] = new String[]{"delete", "suspend"};

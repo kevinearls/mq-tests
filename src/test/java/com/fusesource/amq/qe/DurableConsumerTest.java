@@ -9,6 +9,10 @@ import static org.junit.Assert.*;
 
 /**
  * Created by kearls on 06/08/14.
+ *
+ * Create a consumer, create a durable subscription to a topic, and shutdown.  Create a producer to send messages on
+ * that topic, and then recreate the consumer.  Make sure the consumer receives all of the messages sent when
+ * they were offline.
  */
 public class DurableConsumerTest {
     protected static String brokerURL = "tcp://localhost:61616";
