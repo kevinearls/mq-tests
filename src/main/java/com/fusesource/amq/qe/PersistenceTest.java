@@ -2,8 +2,6 @@ package com.fusesource.amq.qe;
 
 import com.fusesource.amq.qe.util.AsyncConsumer;
 import com.fusesource.amq.qe.util.Producer;
-import org.junit.Before;
-import org.junit.Test;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -12,34 +10,19 @@ import javax.jms.Session;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
 
 /**
- * Created by kearls on 06/08/14.
+ * Created by kearls on 07/08/14.
  */
-public class QuasiPersistenceTest {
+public class PersistenceTest {
     protected static final String TARGET_QUEUE_NAME = "queue://JOBS.suspend";
     protected static String brokerURL = "tcp://localhost:61616";
     protected static String amqUser ="admin";
-    protected static String amqPassword ="biteme";
+    protected static String amqPassword ="admin";
+    private static String ACTION;
 
     private static Integer totalMessages = 1000;
     public static String jobs[] = new String[]{"delete", "suspend"};
-
-    @Before
-    public void setUp() throws Exception {
-        amqUser = System.getProperty("AMQ_USER", amqUser);
-        amqPassword = System.getProperty("AMQ_PASSWORD", amqPassword);
-        brokerURL = System.getProperty("BROKER_URL", brokerURL);
-    }
-
-    public void sendMessages() throws JMSException {
-        Producer producer = new Producer(totalMessages, jobs, TARGET_QUEUE_NAME, brokerURL, amqUser, amqPassword);
-        producer.sendAllMessages();
-
-        assertEquals(totalMessages / jobs.length, producer.deleteCount.get());
-        assertEquals(totalMessages / jobs.length, producer.suspendCount.get());
-    }
 
     public void receiveMessages() throws Exception {
         AsyncConsumer consumer = new AsyncConsumer(jobs, totalMessages, TARGET_QUEUE_NAME, brokerURL, amqUser, amqPassword);
@@ -58,14 +41,29 @@ public class QuasiPersistenceTest {
         consumer.close();
 
         System.out.println("Received " + consumer.suspendCount.get() + " messages on suspend queue, " + consumer.deleteCount.get() + " on delete queue");
-
-        assertEquals(totalMessages / jobs.length, consumer.suspendCount.get());
-        assertEquals(totalMessages / jobs.length, consumer.deleteCount.get());
     }
 
-    @Test
-    public void simpleQuasiPersistenceTest() throws Exception {
-        sendMessages();
-        receiveMessages();
+    public void sendMessages() throws JMSException {
+        Producer producer = new Producer(totalMessages, jobs, TARGET_QUEUE_NAME, brokerURL, amqUser, amqPassword);
+        producer.sendAllMessages();
+
+        System.out.println("Sent " + producer.suspendCount.get() + " on suspend queue, " + producer.deleteCount.get() + " on delete queue");
+        producer.close();
+    }
+
+    public static void main(String[] args) throws Exception {
+        amqUser = System.getProperty("AMQ_USER", amqUser);
+        amqPassword = System.getProperty("AMQ_PASSWORD", amqPassword);
+        brokerURL = System.getProperty("BROKER_URL", brokerURL);
+        ACTION = System.getProperty("ACTION", "send");
+
+        System.out.println("Starting");
+        PersistenceTest pt = new PersistenceTest();
+        if (ACTION.equalsIgnoreCase("send")) {
+            pt.sendMessages();
+        } else {
+            pt.receiveMessages();
+        }
+
     }
 }
